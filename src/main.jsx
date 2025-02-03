@@ -1,7 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
+import "./index.css"
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode></React.StrictMode>
+import React from "react"
+import ReactDOM from "react-dom/client"
+
+import Sidebar from "./components/sidebar"
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Sidebar />
+  </React.StrictMode>
 )
