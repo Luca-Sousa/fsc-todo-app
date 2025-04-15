@@ -25,6 +25,27 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
     const description = descriptionRef.current.value
     const time = timeRef.current.value
 
+    if (!title.trim()) {
+      newErrors.push({
+        inputName: "title",
+        message: "O título é obrigatório.",
+      })
+    }
+
+    if (!time.trim()) {
+      newErrors.push({
+        inputName: "time",
+        message: "O horário é obrigatório.",
+      })
+    }
+
+    if (!description.trim()) {
+      newErrors.push({
+        inputName: "description",
+        message: "A descrição é obrigatória.",
+      })
+    }
+
     setErrors(newErrors)
 
     if (newErrors.length > 0) {
@@ -75,18 +96,18 @@ const AddTaskDialog = ({ isOpen, handleClose, handleSubmit }) => {
                   id="title"
                   label="Título"
                   placeholder="Insira o título da tarefa"
-                  ref={titleRef}
                   errorMessage={titleError?.message}
+                  ref={titleRef}
                 />
 
-                <TimeSelect ref={timeRef} errorMessage={timeError?.message} />
+                <TimeSelect errorMessage={timeError?.message} ref={timeRef} />
 
                 <Input
                   id="description"
                   label="Descrição"
                   placeholder="Descreva a tarefa"
-                  ref={descriptionRef}
                   errorMessage={descriptionError?.message}
+                  ref={descriptionRef}
                 />
 
                 <div className="flex gap-3">
