@@ -60,18 +60,7 @@ const Tasks = () => {
     setTasks(newTasks)
   }
 
-  const handleAddTaskSubmit = async (newTask) => {
-    const response = await fetch("http://localhost:3000/tasks", {
-      method: "POST",
-      body: JSON.stringify(newTask),
-    })
-
-    if (!response.ok) {
-      return toast.success(
-        "Erro ao adicionar a tarefa. Por favor, tente novamente."
-      )
-    }
-
+  const onSubmitTaskSucess = async (newTask) => {
     setTasks([...tasks, newTask])
     toast.success("Tarefa adicionada com sucesso!")
   }
@@ -106,7 +95,7 @@ const Tasks = () => {
           <AddTaskDialog
             isOpen={addTaskDialogIsOpen}
             handleClose={() => setAddTaskDialogIsOpen(false)}
-            handleSubmit={handleAddTaskSubmit}
+            onSubmitSucess={onSubmitTaskSucess}
           />
         </div>
       </div>

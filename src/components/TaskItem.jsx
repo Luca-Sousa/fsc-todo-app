@@ -17,7 +17,7 @@ const TaskItem = ({ task, handleCheckboxClick, onDeleteSucess }) => {
 
     if (!response.ok) {
       setDeleteIsLoading(false)
-      return toast.success(
+      return toast.error(
         "Erro ao deletar a tarefa. Por favor, tente novamente."
       )
     }
