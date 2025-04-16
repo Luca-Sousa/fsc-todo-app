@@ -19,6 +19,7 @@ const TaskDetailsPage = () => {
   const navigate = useNavigate()
   const [errors, setErrors] = useState([])
   const [saveIsLoading, setSaveIsLoading] = useState(false)
+  const [deleteIsLoading, setDeleteIsLoading] = useState(false)
 
   const titleRef = useRef()
   const descriptionRef = useRef()
@@ -97,6 +98,25 @@ const TaskDetailsPage = () => {
     (error) => error.inputName === "description"
   )
 
+  const handleDeleteCLick = async () => {
+    setDeleteIsLoading(true)
+
+    const response = await fetch(`http://localhost:3000/tasks/${task.id}`, {
+      method: "DELETE",
+    })
+
+    if (!response.ok) {
+      setDeleteIsLoading(false)
+      return toast.error(
+        "Erro ao deletar a tarefa. Por favor, tente novamente."
+      )
+    }
+
+    setDeleteIsLoading(false)
+    toast.success("Tarefa deletada com sucesso!")
+    navigate(-1)
+  }
+
   return (
     <div className="flex">
       <Sidebar />
@@ -126,8 +146,17 @@ const TaskDetailsPage = () => {
             </div>
           </div>
 
-          <Button color="danger" className="h-fit self-end">
-            <TrashIcon />
+          <Button
+            color="danger"
+            className="h-fit self-end"
+            onClick={handleDeleteCLick}
+            disabled={deleteIsLoading}
+          >
+            {deleteIsLoading ? (
+              <LoaderIcon className="animate-spin" />
+            ) : (
+              <TrashIcon />
+            )}
             Deletar tarefa
           </Button>
         </div>

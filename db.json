@@ -25,29 +25,8 @@
       "id": "4",
       "title": "Fazer compras",
       "description": "Comprar os ingredientes para o jantar",
-      "time": "morning",
+      "time": "afternoon",
       "status": "in_progress"
-    },
-    {
-      "id": "c6e99f4a-e9b1-482f-b830-6ac6877e9cde",
-      "title": "teste 01",
-      "time": "evening",
-      "description": "teste 01",
-      "status": "not_started"
-    },
-    {
-      "id": "fca66c01-1354-43e3-8420-8566b8e4f00a",
-      "title": "teste 02",
-      "time": "evening",
-      "description": "teste 02",
-      "status": "not_started"
-    },
-    {
-      "id": "946c5683-ce8e-4fa8-a50a-65303e2d8142",
-      "title": "teste 03",
-      "time": "evening",
-      "description": "teste 03",
-      "status": "not_started"
     }
   ]
 }
