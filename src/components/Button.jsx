@@ -9,6 +9,7 @@ const Button = ({ children, color, size, className, ...rest }) => {
         primary: "bg-brand-primary text-white",
         ghost: "bg-transparent text-brand-dark-gray",
         secondary: "bg-brand-light-gray text-brand-dark-blue",
+        danger: "bg-brand-danger text-brand-white",
       },
       size: {
         small: "py-1 text-xs",
@@ -36,7 +37,7 @@ const Button = ({ children, color, size, className, ...rest }) => {
 
 Button.prototype = {
   children: PropTypes.node.isRequired,
-  color: PropTypes.oneOf(["primary", "secondary", "ghost"]),
+  color: PropTypes.oneOf(["primary", "secondary", "ghost", "danger"]),
   size: PropTypes.oneOf(["small", "large"]),
   className: PropTypes.string,
 }
