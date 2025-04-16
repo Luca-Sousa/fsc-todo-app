@@ -1,13 +1,13 @@
 import { Toaster } from "sonner"
 
 import Sidebar from "./components/sidebar"
-import Task from "./components/Task"
+import Tasks from "./components/Tasks"
 
 function App() {
   return (
     <div className="flex">
       <Sidebar />
-      <Task />
+      <Tasks />
       <Toaster
         toastOptions={{
           style: {
