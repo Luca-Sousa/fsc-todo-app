@@ -10,7 +10,7 @@ import {
 } from "../assets/icons"
 import Button from "../components/Button"
 import Input from "../components/Input"
-import Sidebar from "../components/sidebar"
+import Sidebar from "../components/Sidebar"
 import TimeSelect from "../components/TimeSelect"
 import { useDeleteTask } from "../hooks/data/use-delete-task"
 import { useGetTask } from "../hooks/data/use-get-task"
