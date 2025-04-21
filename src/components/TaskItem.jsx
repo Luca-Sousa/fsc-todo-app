@@ -4,10 +4,14 @@ import { toast } from "sonner"
 
 import { CheckIcon, DetailsIcon, LoaderIcon, TrashIcon } from "../assets/icons"
 import { useDeleteTask } from "../hooks/data/use-delete-task"
+import { useUpdateTask } from "../hooks/data/use-update-task"
 import Button from "./Button"
 
-const TaskItem = ({ task, handleCheckboxClick }) => {
-  const { mutate: deleteTask, isPending } = useDeleteTask(task.id)
+const TaskItem = ({ task }) => {
+  const { mutate: deleteTask, isPending: deleteTaskIsLoading } = useDeleteTask(
+    task.id
+  )
+  const { mutate: updateTask } = useUpdateTask(task.id)
 
   const handleDeleteClick = async () => {
     deleteTask(undefined, {
@@ -34,6 +38,35 @@ const TaskItem = ({ task, handleCheckboxClick }) => {
     }
   }
 
+  const getNewStatus = () => {
+    if (task.status === "not_started") {
+      return "in_progress"
+    }
+    if (task.status === "in_progress") {
+      return "done"
+    }
+
+    return "not_started"
+  }
+
+  const handleCheckboxClick = () => {
+    updateTask(
+      {
+        status: getNewStatus(),
+      },
+      {
+        onSuccess: () =>
+          toast.success("Status da tarefa atualizado com sucesso!"),
+      },
+      {
+        onError: () =>
+          toast.error(
+            "Erro ao atualizar status da tarefa.Por favor, tente novamente."
+          ),
+      }
+    )
+  }
+
   return (
     <div
       className={`flex items-center justify-between rounded-lg bg-opacity-10 px-4 py-3 text-sm transition ${getStatusClasses()}`}
@@ -46,7 +79,7 @@ const TaskItem = ({ task, handleCheckboxClick }) => {
             type="checkbox"
             checked={task.status === "done"}
             className="absolute h-full w-full cursor-pointer opacity-0"
-            onChange={() => handleCheckboxClick(task.id)}
+            onChange={handleCheckboxClick}
           />
           {task.status === "done" && <CheckIcon />}
           {task.status === "in_progress" && (
@@ -58,8 +91,12 @@ const TaskItem = ({ task, handleCheckboxClick }) => {
       </div>
 
       <div className="flex items-center gap-2">
-        <Button color="ghost" onClick={handleDeleteClick} disabled={isPending}>
-          {isPending ? (
+        <Button
+          color="ghost"
+          onClick={handleDeleteClick}
+          disabled={deleteTaskIsLoading}
+        >
+          {deleteTaskIsLoading ? (
             <LoaderIcon className="animate-spin text-brand-text-gray" />
           ) : (
             <TrashIcon className="text-brand-text-gray" />
@@ -82,7 +119,6 @@ TaskItem.prototype = {
     time: PropTypes.oneOf(["morning", "afternoon", "evening"]).isRequired,
     status: PropTypes.oneOf(["not_started", "in_progress", "done"]).isRequired,
   }).isRequired,
-  handleCheckboxClick: PropTypes.func.isRequired,
   handleDeleteClick: PropTypes.func.isRequired,
 }
 
