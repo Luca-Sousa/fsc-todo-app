@@ -1,5 +1,6 @@
 import "./AddTaskDialog.css"
 
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import PropTypes from "prop-types"
 import { useRef } from "react"
 import { createPortal } from "react-dom"
@@ -13,7 +14,23 @@ import Button from "./Button"
 import Input from "./Input"
 import TimeSelect from "./TimeSelect"
 
-const AddTaskDialog = ({ isOpen, handleClose, onSubmitSucess }) => {
+const AddTaskDialog = ({ isOpen, handleClose }) => {
+  const nodeRef = useRef()
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationKey: "addTask",
+    mutationFn: async (task) => {
+      const response = await fetch("http://localhost:3000/tasks", {
+        method: "POST",
+        body: JSON.stringify(task),
+      })
+
+      if (!response.ok) throw new Error()
+      return response.json()
+    },
+  })
+
   const {
     register,
     formState: { errors, isSubmitting },
@@ -27,8 +44,6 @@ const AddTaskDialog = ({ isOpen, handleClose, onSubmitSucess }) => {
     },
   })
 
-  const nodeRef = useRef()
-
   const handleSaveClick = async (data) => {
     const task = {
       id: v4(),
@@ -38,23 +53,22 @@ const AddTaskDialog = ({ isOpen, handleClose, onSubmitSucess }) => {
       status: "not_started",
     }
 
-    const response = await fetch("http://localhost:3000/tasks", {
-      method: "POST",
-      body: JSON.stringify(task),
-    })
-
-    if (!response.ok) {
-      return toast.error(
-        "Erro ao adicionar a tarefa. Por favor, tente novamente."
-      )
-    }
-
-    onSubmitSucess(task)
-    handleClose()
-    reset({
-      title: "",
-      time: "morning",
-      description: "",
+    mutate(task, {
+      onSuccess: () => {
+        queryClient.setQueryData("tasks", (oldTasks) => {
+          return [...oldTasks, task]
+        })
+        toast.success("Tarefa adicionada com sucesso!")
+        handleClose()
+        reset({
+          title: "",
+          time: "morning",
+          description: "",
+        })
+      },
+      onError: () => {
+        toast.error("Erro ao adicionar a tarefa. Por favor, tente novamente.")
+      },
     })
   }
 
