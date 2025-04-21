@@ -29,15 +29,8 @@
       "status": "in_progress"
     },
     {
-      "id": "aadc6fd3-ca0c-42e6-b77d-079f20da3a58",
-      "title": "teste 01 fdsgdf dfgsdg fsdf sdgsadg dgaasdgf dsfsd gsdg sgdsd",
-      "time": "evening",
-      "description": "teste 01",
-      "status": "not_started"
-    },
-    {
       "id": "6b785bd2-4262-4080-89c5-e7912db00435",
-      "title": "teste 02",
+      "title": "teste 02 sdgsd",
       "time": "evening",
       "description": "teste 02",
       "status": "not_started"
@@ -47,6 +40,13 @@
       "title": "teste 22",
       "time": "evening",
       "description": "teste 21",
+      "status": "not_started"
+    },
+    {
+      "id": "c1d1698b-d185-4f68-9243-98502698227d",
+      "title": "teste",
+      "time": "morning",
+      "description": "teste",
       "status": "not_started"
     }
   ]
